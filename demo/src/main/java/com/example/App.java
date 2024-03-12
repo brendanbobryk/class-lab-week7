@@ -50,9 +50,47 @@ public class App {
         System.out.println();
         System.out.printf("-------- incoming missile distances (input) --------\n");
         print(input);
-        /*
-         * STUDENTS NEED TO ADD CODE HERE
-         */
+        // sort array
+        Integer arr[] = input;
+        int n = arr.length;
+
+        // Find the maximum element in the array to determine the range of the count
+        // array
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        // Create a count array with the size equal to the maximum element plus one
+        int count[] = new int[max + 1];
+        for (int i = 0; i <= max; ++i) {
+            count[i] = 0;
+        }
+
+        // Store the count of each element
+        for (int i = 0; i < n; ++i) {
+            ++count[arr[i]];
+        }
+
+        // Change count[i] so that count[i] now contains the actual position
+        // of this element in the output array
+        for (int i = 1; i <= max; ++i) {
+            count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        for (int i = n - 1; i >= 0; i--) {
+            output[count[arr[i]] - 1] = arr[i];
+            --count[arr[i]];
+        }
+
+        // Copy the output array to arr, so that arr now contains sorted elements
+        for (int i = 0; i < n; ++i) {
+            arr[i] = output[i];
+        }
+
         // print sorted array
         System.out.println();
         System.out.printf("-------- target missile distances (output) --------\n");
